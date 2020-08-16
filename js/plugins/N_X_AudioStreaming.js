@@ -10,7 +10,7 @@ if (window.Worker) {
     WebAudio.prototype._loading = async function (reader) {
         const context = this;
         try {
-            const worker = new Worker('./js/plugins/worker-stream-vorbis.js');
+            const worker = new Worker('./js/plugins/worker-stbvorbis-stream.js');
             const decodeAudio = (eof, data) => {
                 console.log(data);
                 if (data) {
