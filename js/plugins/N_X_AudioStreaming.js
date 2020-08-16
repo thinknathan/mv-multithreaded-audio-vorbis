@@ -7,6 +7,7 @@
  */
 
 if (window.Worker) {
+
     WebAudio.prototype._loading = async function (reader) {
         const context = this;
         try {
@@ -22,27 +23,20 @@ if (window.Worker) {
                         eof: eof
                     });
                 }
-            };
+            }
             const handleDecodedAudio = (msg) => {
                 if (msg && msg.data) {
                     context._onDecode(msg.data);
                 }
             }
-
             worker.onmessage = handleDecodedAudio;
-
             while (true) {
-                const {
-                    done,
-                    value
-                } = await reader.read();
-
+                const { done, value } = await reader.read();
                 if (done) {
                     decodeAudio(true);
                     return;
                 }
                 let array = value;
-
                 this._readLoopComments(array);
                 decodeAudio(false, array);
             }
@@ -58,4 +52,5 @@ if (window.Worker) {
             }
         }
     }
+
 };
