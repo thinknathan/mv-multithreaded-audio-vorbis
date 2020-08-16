@@ -1,9 +1,11 @@
 # mv-multithreaded-audio
- RPG Maker MV Plugin that uses web workers to stream Opus audio.
+RPG Maker MV Plugin that uses web workers to decode Vorbis audio stream
 
-## Is this ready for production?
-NO! This is a hacked-together proof-of-concept. It is lacking the features of a mature audio system. There's no way to seek to different parts of a song, or even to adjust the volume.
+## Goal
+AudioStreaming.js is a plugin that streams Vorbis audio files. One flaw it has is that in non-Chromium browsers, it introduces significant noise and clicking.
+
+So far I've attempted to offload some of the work onto a web worker to see if that helps. No luck so far.
 
 ## Credits
-This is an application of fetch-stream-audio by @AnthumChris
-https://github.com/AnthumChris/fetch-stream-audio
+AudioStreaming.js (C) krmbn0576 (くらむぼん)
+stbvorbis.js (C) Hajime Hoshi, krmbn0576
