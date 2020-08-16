@@ -2,7 +2,7 @@
  * @plugindesc v1.00 (Requires AudioStreaming) Move audio decoding to web worker.
  * @author Think_Nathan
  *
- * @help No plugin commands. Requires AudioStreaming.js by Kurambon (くらむぼん)
+ * @help No plugin commands. Requires AudioStreaming.js by krmbn0576 (くらむぼん)
  * https://forums.rpgmakerweb.com/index.php?threads/audiostreaming-js-plugin-to-improve-rpg-maker-mv-audio-performance.110063/
  */
 
