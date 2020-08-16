@@ -12,7 +12,6 @@ if (window.Worker) {
         try {
             const worker = new Worker('./js/plugins/worker-stbvorbis-stream.js');
             const decodeAudio = (eof, data) => {
-                console.log(data);
                 if (data) {
                     worker.postMessage({
                         eof: eof,
@@ -44,7 +43,7 @@ if (window.Worker) {
                 }
                 let array = value;
 
-                //this._readLoopComments(array);
+                this._readLoopComments(array);
                 decodeAudio(false, array);
             }
 
