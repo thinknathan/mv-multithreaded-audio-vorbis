@@ -1,4 +1,4 @@
-# mv-multithreaded-audio
+# mv-multithreaded-audio-vorbis
 RPG Maker MV Plugin that uses web workers to decode Vorbis audio stream
 
 ## Goal
