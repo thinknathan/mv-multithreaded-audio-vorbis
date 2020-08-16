@@ -187,7 +187,8 @@ if (function() {
     return enabled;
 }()) {
 
-if (!window.Worker) {
+// Load if browser doesn't support workers or is Safari
+if (!window.Worker || (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1)) {
     PluginManager.loadScript('stbvorbis_stream.js');
 }
 

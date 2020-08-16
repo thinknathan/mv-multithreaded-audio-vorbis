@@ -6,8 +6,13 @@
  * https://forums.rpgmakerweb.com/index.php?threads/audiostreaming-js-plugin-to-improve-rpg-maker-mv-audio-performance.110063/
  */
 
-if (window.Worker) {
-
+// Detect Web Worker Support and exclude Safari
+// stbvorbis-stream.js will sniff for Safari
+// and fall back to ASM implementation.
+// The ASM fallback fails to resolve a url for its own worker,
+// so we exclude Safari.
+if (!!window.Worker && !(navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1)) {
+    
     WebAudio.prototype._loading = async function (reader) {
         const context = this;
         try {
