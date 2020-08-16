@@ -6,6 +6,8 @@ AudioStreaming.js is a plugin that streams Vorbis audio files. One flaw it has i
 
 So far I've attempted to offload some of the work onto a web worker to see if that helps. No luck so far.
 
+UPDATE: I overlooked the fact that the original plugin already spawns its own thread, so my implementation just leaks memory by spawning more unneeded threads. Whoops!
+
 ## Credits
-AudioStreaming.js (C) krmbn0576 (くらむぼん)
-stbvorbis.js (C) Hajime Hoshi, krmbn0576
+- AudioStreaming.js (C) krmbn0576 (くらむぼん)
+- stbvorbis.js (C) Hajime Hoshi, krmbn0576
