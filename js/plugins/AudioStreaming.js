@@ -187,7 +187,9 @@ if (function() {
     return enabled;
 }()) {
 
-PluginManager.loadScript('stbvorbis_stream.js');
+if (!window.Worker) {
+    PluginManager.loadScript('stbvorbis_stream.js');
+}
 
 AudioManager.audioFileExt = function() {
     return '.ogg';
