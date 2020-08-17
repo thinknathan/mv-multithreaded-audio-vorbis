@@ -4,6 +4,7 @@ class AudioCopyProcessor extends AudioWorkletProcessor {
 
     constructor() {
         super();
+        this.sessions = {};
         this.port.onmessage = this.handleMessage.bind(this);
         this.initializeP = new Promise(function (resolve) {
             if (typeof useWasm !== "undefined") {
@@ -85,23 +86,21 @@ class AudioCopyProcessor extends AudioWorkletProcessor {
     }
 
     handleMessage(event) {
-        //console.log(event.data.id);
         const self = this;
-        var sessions = {};
         this.initializeP.then(function (funcs) {
             var statePtr = null;
-            if (event.data.id in sessions) {
-                statePtr = sessions[event.data.id].state
+            if (event.data.id in self.sessions) {
+                statePtr = self.sessions[event.data.id].state
             } else {
                 statePtr = funcs.open();
-                sessions[event.data.id] = {
+                self.sessions[event.data.id] = {
                     state: statePtr,
                     input: null
                 }
             }
-            sessions[event.data.id].input = self.concatArrays(sessions[event.data.id].input, event.data.buf);
-            while (sessions[event.data.id].input.byteLength > 0) {
-                var input = sessions[event.data.id].input;
+            self.sessions[event.data.id].input = self.concatArrays(self.sessions[event.data.id].input, event.data.buf);
+            while (self.sessions[event.data.id].input.byteLength > 0) {
+                var input = self.sessions[event.data.id].input;
                 var copiedInput = null;
                 var chunkLength = Math.min(65536, input.byteLength);
                 if (input instanceof ArrayBuffer) {
@@ -118,10 +117,12 @@ class AudioCopyProcessor extends AudioWorkletProcessor {
                     outputPtr, 
                     readPtr
                 );
+                
                 Module._free(copiedInput.byteOffset);
                 var read = self.ptrToInt32(readPtr);
                 Module._free(readPtr);
-                sessions[event.data.id].input = input.slice(read);
+                
+                self.sessions[event.data.id].input = input.slice(read);
                 var result = {
                     id: event.data.id,
                     data: null,
@@ -129,12 +130,11 @@ class AudioCopyProcessor extends AudioWorkletProcessor {
                     eof: false,
                     error: null
                 };
-                //console.log(length);
                 if (length < 0) {
                     result.error = "stbvorbis decode failed: " + length;
                     self.port.postMessage(result);
                     funcs.close(statePtr);
-                    delete sessions[event.data.id];
+                    delete self.sessions[event.data.id];
                     Module._free(outputPtr);
                     return
                 }
@@ -149,9 +149,11 @@ class AudioCopyProcessor extends AudioWorkletProcessor {
                 }
                 Module._free(self.ptrToInt32(outputPtr));
                 Module._free(outputPtr);
+                
                 if (read === 0) {
                     break
                 }
+                
                 if (result.sampleRate === 0) {
                     result.sampleRate = funcs.sampleRate(statePtr)
                 }
@@ -160,7 +162,7 @@ class AudioCopyProcessor extends AudioWorkletProcessor {
                 }))
             }
             if (event.data.eof) {
-                var len = sessions[event.data.id].input.length;
+                var len = self.sessions[event.data.id].input.length;
                 if (len) {
                     console.warn("not all the input data was decoded. remaining: " + len + "[bytes]")
                 }
@@ -173,7 +175,7 @@ class AudioCopyProcessor extends AudioWorkletProcessor {
                 };
                 self.port.postMessage(result);
                 funcs.close(statePtr);
-                delete sessions[event.data.id]
+                delete self.sessions[event.data.id]
             }
         })
     };
