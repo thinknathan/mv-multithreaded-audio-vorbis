@@ -3,5 +3,6 @@
 var $plugins =
 [
 {"name":"AudioStreaming","status":true,"description":"Load audio faster and use only ogg files.","parameters":{"mode":"10","deleteM4a":"false"}},
-{"name":"N_X_AudioStreaming","status":true,"description":"v1.00 (Requires AudioStreaming) Move audio decoding to web worker.","parameters":{}}
+{"name":"N_X_AudioStreaming","status":false,"description":"v1.00 (Requires AudioStreaming) Move audio decoding to web worker.","parameters":{}},
+{"name":"N_X_AudioStreaming2","status":true,"description":"v1.00 (Requires AudioStreaming) Move audio decoding to audio worklet.","parameters":{}}
 ];
