@@ -91,9 +91,7 @@ var stbvorbis = typeof stbvorbis !== "undefined" ? stbvorbis : {};
             }
             inCallbackImpl(input)
         };
-        //console.log('decodeStream');
         initializeWorkerP.then(function (worker) {
-            //console.log(worker);
             var currentId = sessionId;
             sessionId++;
             var sampleRate = 0;
@@ -132,9 +130,6 @@ var stbvorbis = typeof stbvorbis !== "undefined" ? stbvorbis : {};
             };
             worker.onmessage = onmessage;
             inCallbackImpl = function (input) {
-                //console.log('currentId ' + currentId);
-                
-                
                 if (input.eof) {
                     worker.postMessage({
                         id: currentId,
