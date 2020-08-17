@@ -1,12 +1,10 @@
 # mv-multithreaded-audio-vorbis
-RPG Maker MV Plugin that uses web workers to decode Vorbis audio stream
+RPG Maker MV plugin that uses an Audio Worklet to decode an ogg/vorbis audio stream.
 
 ## Goal
-AudioStreaming.js is a plugin that streams Vorbis audio files. One flaw it has is that in non-Chromium browsers, it introduces significant noise and clicking.
+AudioStreaming.js is a plugin that streams ogg/vorbis audio files. Unfortunately, it introduces significant noise and clicking artifacts into the audio. This problem is worse in non-Chromium browsers.
 
-So far I've attempted to offload some of the work onto a web worker to see if that helps. No luck so far.
-
-UPDATE: I overlooked the fact that the original plugin already spawns its own thread, so my implementation just leaks memory by spawning more unneeded threads. Whoops!
+I've ported the original code from using a web worker to using an audio worklet. More work is needed to address the noise problems.
 
 ## Credits
 - AudioStreaming.js (C) krmbn0576 (くらむぼん)
