@@ -1,4 +1,4 @@
-import { atob, btoa } from '/js/plugins/base64-module.js';
+import { atob } from './base64-module.js';
 
 var Module = typeof Module !== "undefined" ? Module : {};
 var useWasm = true;

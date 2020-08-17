@@ -187,10 +187,7 @@ if (function() {
     return enabled;
 }()) {
 
-// Load if browser doesn't support workers or is Safari
-if (!window.Worker || (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1)) {
-    PluginManager.loadScript('stbvorbis_stream.js');
-}
+//PluginManager.loadScript('stbvorbis_stream.js');
 
 AudioManager.audioFileExt = function() {
     return '.ogg';
