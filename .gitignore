@@ -1,6 +1,7 @@
 # RPG Maker
 save
 .~lock.*
+js/plugins/webLoader.js
 
 # Windows image file caches
 Thumbs.db
